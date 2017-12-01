@@ -7,20 +7,17 @@ var face = document.getElementById("face");
 
 
 var crazy =0;
+var tick=0;
+var oldsec=0;
 
 // console.log(123);
 
-function setSeconds(s) {
-   var secondDeg =s*6;
+function setTime(s,m,h) {
+   //console.log(6*tick/100);
+   var secondDeg =s*6 + 6*tick/100;
    secondHand.style.transform = "rotate("+secondDeg+"deg)";
-}
-
-function setMinute(m,s) {
    var  minuteDeg = m*6+s/10;
    minuteHand.style.transform = "rotate("+minuteDeg+"deg)";
-}
-
-function setHour(h,m) {
    var hourDeg = h*30+m/2;
    hourHand.style.transform = "rotate("+hourDeg+"deg)";
 }
@@ -36,10 +33,14 @@ function updateHands() {
    // s = crazy;
    // m = s/10;
    // h = m/10;
+   tick++;
+   if (oldsec!=s) {
+      oldsec=s;
+      tick=0;
+   }
 
-   setSeconds(s);
-   setMinute(m,s);
-   setHour(h,m);
+   setTime(s,m,h);
 }
 
-setInterval(updateHands, 1000);
+updateHands();
+setInterval(updateHands, 10);
